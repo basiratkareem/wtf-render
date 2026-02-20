@@ -1,5 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
+
+const API_URL = import.meta.env.VITE_API_URL; 
 
 function App() {
   const [tasks, setTasks] = useState([]);
@@ -22,12 +24,14 @@ function App() {
   const addTask = async (e) => {
     e.preventDefault();
     if (!newTask.trim()) return;
+
     try {
       const res = await fetch(`${API_URL}/tasks`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ description: newTask }),
       });
+
       if (res.ok) {
         const task = await res.json();
         setTasks([task, ...tasks]);
@@ -43,6 +47,7 @@ function App() {
       const res = await fetch(`${API_URL}/tasks/${id}`, {
         method: 'DELETE',
       });
+
       if (res.ok) {
         setTasks(tasks.filter(task => task.id !== id));
       }

@@ -1,60 +1,7 @@
 import "./App.css";
-import { useState, useEffect } from 'react';
 
-const API_URL = import.meta.env.VITE_API_URL;
-
-function App() {
-  const [tasks, setTasks] = useState([]);
-  const [newTask, setNewTask] = useState('');
-
-  useEffect(() => {
-    fetchTasks();
-  }, []);
-
-  const fetchTasks = async () => {
-    try {
-      const res = await fetch(`${API_URL}/tasks`);
-      const data = await res.json();
-      setTasks(data);
-    } catch (err) {
-      console.error('Error fetching tasks:', err);
-    }
-  };
-
-  const addTask = async (e) => {
-    e.preventDefault();
-    if (!newTask.trim()) return;
-    try {
-      const res = await fetch(`${API_URL}/tasks`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ description: newTask }),
-      });
-      if (res.ok) {
-        const task = await res.json();
-        setTasks([task, ...tasks]);
-        setNewTask('');
-      }
-    } catch (err) {
-      console.error('Error adding task:', err);
-    }
-  };
-
-  const deleteTask = async (id) => {
-    try {
-      const res = await fetch(`${API_URL}/tasks/${id}`, {
-        method: 'DELETE',
-      });
-      if (res.ok) {
-        setTasks(tasks.filter(task => task.id !== id));
-      }
-    } catch (err) {
-      console.error('Error deleting task:', err);
-    }
-  };
-
-  return (
-  <div className="container">
+return (
+  <div className="app">
     <div className="card">
       <h1 className="title">Task Manager</h1>
 
@@ -74,10 +21,11 @@ function App() {
       <ul className="task-list">
         {tasks.map((task) => (
           <li key={task.id} className="task-item">
-            <span>{task.description}</span>
+            <span className="task-text">{task.description}</span>
             <button
               onClick={() => deleteTask(task.id)}
-              className="delete-btn">
+              className="delete-btn"
+            >
               Delete
             </button>
           </li>
@@ -85,7 +33,4 @@ function App() {
       </ul>
     </div>
   </div>
- );
-}
-
-export default App;
+);

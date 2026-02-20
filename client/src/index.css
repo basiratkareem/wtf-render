@@ -1,51 +1,17 @@
-:root {
-  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 
-    'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 
-    'Helvetica Neue', sans-serif;
-
-  line-height: 1.5;
-  font-weight: 400;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
 * {
   box-sizing: border-box;
-  margin: 0;
-  padding: 0;
 }
 
 body {
   margin: 0;
-  font-family: inherit;
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans',
+    'Helvetica Neue', sans-serif;
 
-  /* Match gradient from App.css */
   background: linear-gradient(135deg, #667eea, #764ba2);
 
   display: flex;
   justify-content: center;
   align-items: center;
-
   min-height: 100vh;
-}
-
-/* Remove default Vite dark theme behavior */
-html {
-  color-scheme: light;
-}
-
-/* Optional: smoother typography */
-h1, h2, h3, h4, h5, h6 {
-  font-weight: 600;
-}
-
-button {
-  font-family: inherit;
-}
-
-input {
-  font-family: inherit;
 }

@@ -3,23 +3,52 @@ import "./App.css";
 
 function App() {
   const [tasks, setTasks] = useState([]);
-  const [newTask, setNewTask] = useState("");
+  const [newTask, setNewTask] = useState('');
 
-  const addTask = (e) => {
-    e.preventDefault();
-    if (!newTask.trim()) return;
+  useEffect(() => {
+    fetchTasks();
+  }, []);
 
-    const task = {
-      id: Date.now(),
-      description: newTask,
-    };
-
-    setTasks([...tasks, task]);
-    setNewTask("");
+  const fetchTasks = async () => {
+    try {
+      const res = await fetch(`${API_URL}/tasks`);
+      const data = await res.json();
+      setTasks(data);
+    } catch (err) {
+      console.error('Error fetching tasks:', err);
+    }
   };
 
-  const deleteTask = (id) => {
-    setTasks(tasks.filter((task) => task.id !== id));
+  const addTask = async (e) => {
+    e.preventDefault();
+    if (!newTask.trim()) return;
+    try {
+      const res = await fetch(`${API_URL}/tasks`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ description: newTask }),
+      });
+      if (res.ok) {
+        const task = await res.json();
+        setTasks([task, ...tasks]);
+        setNewTask('');
+      }
+    } catch (err) {
+      console.error('Error adding task:', err);
+    }
+  };
+
+  const deleteTask = async (id) => {
+    try {
+      const res = await fetch(`${API_URL}/tasks/${id}`, {
+        method: 'DELETE',
+      });
+      if (res.ok) {
+        setTasks(tasks.filter(task => task.id !== id));
+      }
+    } catch (err) {
+      console.error('Error deleting task:', err);
+    }
   };
 
   return (

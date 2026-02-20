@@ -8,8 +8,7 @@ body {
     'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans',
     'Helvetica Neue', sans-serif;
 
-  background: linear-gradient(135deg, #667eea, #764ba2);
-
+  background: linear-gradient(135deg, #4f46e5, #9333ea);
   display: flex;
   justify-content: center;
   align-items: center;
